@@ -9,6 +9,7 @@
             $this->load->helper('url'); // Carga del Helper para usar el redirect
             $this->load->model('Persona'); // Carga del modelo
             $this->load->library('form_validation');// Libreria para validaciones del formulario
+            $this->load->library('session'); // Carga libreria para manejar Sesiones
             
             $this->load->database();
         }
@@ -22,6 +23,9 @@
         }
 
         function index(){
+            // $this->session->set_userdata('item', 'Sesión Declarada');
+            // echo $this->session->userdata('item');
+            // $this->session->unset_userdata('item');
             redirect('/personas/listado');
         }
         
