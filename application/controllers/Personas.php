@@ -26,6 +26,7 @@
             // $this->session->set_userdata('item', 'Sesión Declarada');
             // echo $this->session->userdata('item');
             // $this->session->unset_userdata('item');
+            
             redirect('/personas/listado');
         }
         
@@ -68,10 +69,14 @@
                     }else{
                         $persona_id = $this->Persona->insert($data); // Persona es el nombre del modelo
 
-                        $error = $this->do_upload($persona_id);
+                       $error = $this->do_upload($persona_id);
 
-                        if($error === ""){
-                            redirect("/personas/guardar/$persona_id");
+                       if($error === ""){
+
+                            $this->session->flashdata('message', 'Guardado exitoso');
+
+                            redirect("/personas/listado"); // Este es con el plugin que muestra alert en mensaje
+                            //redirect("/personas/guardar/$persona_id"); // Este es el normal CRUD
                         }
 
                     }
