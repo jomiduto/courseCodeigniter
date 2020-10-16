@@ -27,6 +27,16 @@
             $query = $this->db->get();
             return $query->result();
         }
+
+        // Metodo para el buscador de la tabla - Filtrado
+        function search($nombre){
+            $this->db->select();
+            $this->db->from($this->table);
+            $this->db->like("nombre", $nombre);
+
+            $query = $this->db->get();
+            return $query->result();
+        }
         
         // Metodo para insertar un registro
         function insert($data) {

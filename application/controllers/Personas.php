@@ -31,8 +31,12 @@
         }
         
         public function listado(){
-            $vdata['personas'] = $this->Persona->findAll();
-            $this->load->view('personas/listado', $vdata);
+            $nombre = $this->input->get("nombre"); // Parametro de busqueda name para el buscador
+
+            $vdata['personas'] = $this->Persona->search($nombre);
+            $view["view"] = $this->load->view('personas/listado', $vdata, TRUE);
+            
+            $this->load->view('body', $view);
         }
 
         public function guardar($persona_id = null){
@@ -84,7 +88,9 @@
             }
 
             $vdata['error'] = $error;
-            $this->load->view('personas/guardar', $vdata);
+
+            $view["view"] = $this->load->view('personas/guardar', $vdata, TRUE);
+            $this->load->view('body', $view);
         }
 
         // Método para upload de archivos
@@ -147,7 +153,8 @@
                 $vdata['nombre'] = $vdata['apellido'] = $vdata['edad'] = "";
             }
 
-            $this->load->view('personas/ver', $vdata);
+            $view["view"] = $this->load->view('personas/ver', $vdata, TRUE);
+            $this->load->view('body', $view);
         }
     }
 
