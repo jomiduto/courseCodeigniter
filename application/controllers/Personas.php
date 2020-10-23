@@ -30,10 +30,27 @@
             redirect('/personas/listado');
         }
         
-        public function listado(){
+        public function listado($pag = 1){
+
+            $pag--;
+            
+            if($pag < 0){
+                $pag =0;
+            }
+
+            $page_size = 2; //Cantidad de registros por página
+            $offset = $pag * $page_size;
+            
             $nombre = $this->input->get("nombre"); // Parametro de busqueda name para el buscador
 
-            $vdata['personas'] = $this->Persona->search($nombre);
+            if($nombre != ""){
+                $offset = 0;
+                $page = 0;
+            }
+
+            $vdata['personas'] = $this->Persona->pagination($page_size, $offset, $nombre);//$this->Persona->search($nombre);
+            $vdata["current_pag"] = $pag + 1; 
+            $vdata["last_pag"] = ceil($this->Persona->count($nombre) / $page_size); // Divine los registros entre el page_seze y tedondear resultado
             $view["view"] = $this->load->view('personas/listado', $vdata, TRUE);
             
             $this->load->view('body', $view);
